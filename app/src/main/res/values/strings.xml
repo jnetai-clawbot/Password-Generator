@@ -23,4 +23,8 @@
     <string name="special_chars_added">Special chars added! ✨</string>
     <string name="click_generate">Click generate...</string>
     <string name="enter_password">Enter a password to check...</string>
+
+    <!-- About -->
+    <string name="about">About</string>
+    <string name="about_title">About Password Generator</string>
 </resources>

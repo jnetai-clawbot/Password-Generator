@@ -3,10 +3,14 @@ package com.passwordgenerator.app
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -51,10 +55,63 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         initViews()
         setupPasswordGenerator()
         setupPassphraseGenerator()
         setupStrengthChecker()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_about -> {
+                showAboutDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showAboutDialog() {
+        try {
+            val versionName = try {
+                packageManager.getPackageInfo(packageName, 0).versionName
+            } catch (_: Exception) { "1.0.0" }
+
+            val message = "Password Generator\nVersion $versionName\n\nMade by jnetai.com"
+            val repoUrl = "https://github.com/jnetai-clawbot/Password-Generator"
+            val siteUrl = "https://jnetai.com"
+
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(getString(R.string.about_title))
+                .setMessage(message)
+                .setPositiveButton("OK", null)
+                .setNeutralButton("Share") { _, _ ->
+                    try {
+                        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        val clip = ClipData.newPlainText("Password Generator", repoUrl)
+                        clipboard.setPrimaryClip(clip)
+                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, "Check out Password Generator: $repoUrl")
+                        }
+                        startActivity(Intent.createChooser(shareIntent, "Share Password Generator"))
+                    } catch (_: Exception) {}
+                }
+                .setNegativeButton("Visit") { _, _ ->
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(siteUrl)))
+                    } catch (_: Exception) {}
+                }
+                .show()
+        } catch (_: Exception) {}
     }
 
     private fun initViews() {

@@ -1,11 +1,12 @@
-name: Build Android APK
+name: Build & Release Password Generator APK
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -35,33 +36,43 @@ jobs:
         run: ./gradlew assembleDebug
 
       - name: Build Release APK
+        env:
+          KEYSTORE_PASSWORD: "${{ secrets.KEYSTORE_PASSWORD }}"
+          KEY_PASSWORD: "${{ secrets.KEY_PASSWORD }}"
         run: ./gradlew assembleRelease
 
       - name: Rename APKs
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk Password-Generator-debug.apk
           cp app/build/outputs/apk/release/app-release.apk Password-Generator.apk
+          ls -lh Password-Generator*.apk
 
-      - name: Upload APK as artifact
+      - name: Upload debug APK (artifact)
         uses: actions/upload-artifact@v4
         with:
-          name: Password-Generator-APKs
-          path: |
-            Password-Generator.apk
-            Password-Generator-debug.apk
+          name: Password-Generator-debug
+          path: Password-Generator-debug.apk
+
+      - name: Upload release APK (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Password-Generator
+          path: Password-Generator.apk
 
       - name: Create GitHub Release
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ github.run_number }}
-          name: "Password Generator v${{ github.run_number }}"
-          body: |
-            Automated build of Password Generator app.
-            Includes debug and release APKs.
-          files: |
-            Password-Generator.apk
-            Password-Generator-debug.apk
-          generate_release_notes: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="v${{ github.run_number }}"
+          TAG="pwgen-$VERSION"
+          echo "Creating release $TAG"
+          gh release create "$TAG" \
+            --title "Password Generator $VERSION" \
+            --notes "Password Generator $VERSION
+          - Debug: Password-Generator-debug.apk
+          - Release (signed): Password-Generator.apk
+
+          Features: Password generator, passphrase generator, strength checker
+          Target devices: Samsung S7, S8, Pixel 6, Pixel 7 (minSdk 24)" \
+            Password-Generator-debug.apk Password-Generator.apk || \
+          gh release upload "$TAG" Password-Generator-debug.apk Password-Generator.apk --clobber
