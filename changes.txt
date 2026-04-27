@@ -1,0 +1,29 @@
+Password Generator App - Changes.txt
+======================================
+Version: 1.0.0
+Date: 2026-04-27
+
+Features:
+- Password Generator with configurable length (4-128 chars)
+- Passphrase Generator with 500+ word dictionary
+- Password Strength Checker with real-time analysis
+- All generation uses SecureRandom for cryptographic security
+- Dark theme with glassmorphism cards (#0f0f1a / #1a1a2e)
+- JetBrains Mono font for password display
+- Accent gradient (#00d4ff → #7c3aed)
+- Copy to clipboard functionality
+- +Numbers, UPPERCASE, +Symbols modifiers for passphrases
+- Strength indicators (Weak/Medium/Strong) with color coding
+- Offline operation (no internet permission needed)
+- Signed with existing keystore for app updates
+
+Technical:
+- minSdk: 24, targetSdk: 34, compileSdk: 34
+- Kotlin + ViewBinding
+- Material 3 Dark theme
+- No Room database (no storage)
+- SecureRandom for crypto-secure generation
+
+Built and pushed to GitHub:
+- Repo: https://github.com/jnetai-clawbot/Password-Generator
+- APK location: /home/jay/Documents/Scripts/AI/openclaw/Password-Generator/apk/
