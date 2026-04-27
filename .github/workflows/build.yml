@@ -1,0 +1,67 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/keystore.jks
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Build Release APK
+        run: ./gradlew assembleRelease
+
+      - name: Rename APKs
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk Password-Generator-debug.apk
+          cp app/build/outputs/apk/release/app-release.apk Password-Generator.apk
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Password-Generator-APKs
+          path: |
+            Password-Generator.apk
+            Password-Generator-debug.apk
+
+      - name: Create GitHub Release
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}
+          name: "Password Generator v${{ github.run_number }}"
+          body: |
+            Automated build of Password Generator app.
+            Includes debug and release APKs.
+          files: |
+            Password-Generator.apk
+            Password-Generator-debug.apk
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

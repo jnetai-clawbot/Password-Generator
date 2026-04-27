@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/bg_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="🔐 KeyForge"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:backgroundTint="@color/accent_primary" />
+
+        <TextView
+            android:id="@+id/subtitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/subtitle"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- ==================== PASSWORD GENERATOR CARD ==================== -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/passwordCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:contentPadding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/gradient_accent_vertical"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/password_generator"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Status box -->
+                <TextView
+                    android:id="@+id/passwordStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Length input row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/length"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="15sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <EditText
+                        android:id="@+id/passwordLengthInput"
+                        android:layout_width="70dp"
+                        android:layout_height="48dp"
+                        android:inputType="number"
+                        android:text="12"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:fontFamily="monospace"
+                        android:background="@drawable/bg_input"
+                        android:padding="8dp" />
+
+                </LinearLayout>
+
+                <!-- Password display -->
+                <EditText
+                    android:id="@+id/passwordOutput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/jetbrains_mono"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_output"
+                    android:hint="@string/click_generate"
+                    android:padding="12dp" />
+
+                <!-- Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp">
+
+                    <Button
+                        android:id="@+id/generatePasswordBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/generate"
+                        android:textAllCaps="false"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif"
+                        android:background="@drawable/bg_button_primary"
+                        android:textColor="@color/white"
+                        android:stateListAnimator="@null" />
+
+                    <Button
+                        android:id="@+id/copyPasswordBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="@string/copy"
+                        android:textAllCaps="false"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif"
+                        android:background="@drawable/bg_button"
+                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@null" />
+                </LinearLayout>
+
+                <!-- Strength indicator -->
+                <TextView
+                    android:id="@+id/passwordStrength"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- ==================== PASSPHRASE GENERATOR CARD ==================== -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/passphraseCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:contentPadding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/gradient_accent_vertical"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/passphrase_generator"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Status box -->
+                <TextView
+                    android:id="@+id/passphraseStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Words input row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/words"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="15sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <EditText
+                        android:id="@+id/numWordsInput"
+                        android:layout_width="70dp"
+                        android:layout_height="48dp"
+                        android:inputType="number"
+                        android:text="4"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:fontFamily="monospace"
+                        android:background="@drawable/bg_input"
+                        android:padding="8dp" />
+
+                </LinearLayout>
+
+                <!-- Passphrase display -->
+                <EditText
+                    android:id="@+id/passphraseOutput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/jetbrains_mono"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_output"
+                    android:hint="@string/click_generate"
+                    android:padding="12dp" />
+
+                <!-- Buttons row 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
+
+                    <Button
+                        android:id="@+id/generatePassphraseBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:text="@string/generate"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif"
+                        android:background="@drawable/bg_button_primary"
+                        android:textColor="@color/white"
+                        android:stateListAnimator="@null" />
+
+                    <Button
+                        android:id="@+id/addNumbersBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:text="@string/add_numbers"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif"
+                        android:background="@drawable/bg_button"
+                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@null" />
+
+                    <Button
+                        android:id="@+id/makeUppercaseBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:text="@string/uppercase"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif"
+                        android:background="@drawable/bg_button"
+                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@null" />
+                </LinearLayout>
+
+                <!-- Buttons row 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp">
+
+                    <Button
+                        android:id="@+id/addSymbolsBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:text="@string/add_symbols"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif"
+                        android:background="@drawable/bg_button"
+                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@null" />
+
+                    <Button
+                        android:id="@+id/copyPassphraseBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:text="@string/copy"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif"
+                        android:background="@drawable/bg_button"
+                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@null" />
+                </LinearLayout>
+
+                <!-- Passphrase strength -->
+                <TextView
+                    android:id="@+id/passphraseStrength"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- ==================== STRENGTH CHECKER CARD ==================== -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/strengthCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:contentPadding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/gradient_accent_vertical"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/strength_checker"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Password input -->
+                <EditText
+                    android:id="@+id/checkerInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="text"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/jetbrains_mono"
+                    android:textColor="@color/text_primary"
+                    android:background="@drawable/bg_output"
+                    android:hint="@string/enter_password"
+                    android:padding="12dp"
+                    android:maxLines="1" />
+
+                <!-- Check strength button -->
+                <Button
+                    android:id="@+id/checkStrengthBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/check_strength"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:fontFamily="sans-serif"
+                    android:background="@drawable/bg_button_primary"
+                    android:textColor="@color/white"
+                    android:stateListAnimator="@null" />
+
+                <!-- Result indicators -->
+                <LinearLayout
+                    android:id="@+id/strengthResultLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/checkerStrength"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:id="@+id/checkerDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:textColor="@color/text_secondary" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Footer spacing -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+
+</ScrollView>

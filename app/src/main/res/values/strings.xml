@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Password Generator</string>
+    <string name="subtitle">Generate secure passwords &amp; memorable passphrases</string>
+    <string name="password_generator">Password Generator</string>
+    <string name="passphrase_generator">Passphrase Generator</string>
+    <string name="strength_checker">Password Strength Checker</string>
+    <string name="length">Length:</string>
+    <string name="words">Words:</string>
+    <string name="generate">Generate</string>
+    <string name="copy">Copy</string>
+    <string name="add_numbers">+ Numbers</string>
+    <string name="uppercase">UPPERCASE</string>
+    <string name="add_symbols">+ Symbols</string>
+    <string name="check_strength">Check Strength</string>
+    <string name="strong">🛡️ Strong</string>
+    <string name="medium">⚡ Medium</string>
+    <string name="weak">⚠️ Weak</string>
+    <string name="copied_to_clipboard">✓ Copied to clipboard!</string>
+    <string name="generate_first">Generate a password first!</string>
+    <string name="numbers_added">Numbers added! 🎲</string>
+    <string name="letters_uppercased">Letters uppercased! 🔠</string>
+    <string name="special_chars_added">Special chars added! ✨</string>
+    <string name="click_generate">Click generate...</string>
+    <string name="enter_password">Enter a password to check...</string>
+</resources>
