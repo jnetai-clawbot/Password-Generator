@@ -18,8 +18,8 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -506,6 +506,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="40dp" />
+
+    </LinearLayout>
 
     </ScrollView>
 
